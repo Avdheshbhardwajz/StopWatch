@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StopWatch</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        height: 100vh;
+        margin: 0px;
+        background-color: rgb(25, 25, 25);
+      }
+      .container {
+        border: 1px solid black;
+        width: 25%;
+        height: 25%;
+        text-align: center;
+        padding: 20px 10px;
+        box-shadow: rgb(255, 255, 255) 0px 3px 8px;
+        background-color: white;
+      }
+      button {
+        padding: 10px 15px;
+        background-color: rgb(247, 198, 198);
+        font-family: poppins;
+        font-weight: 500;
+      }
+      button:hover {
+        background-color: black;
+        color: white;
+      }
+      .heading {
+        font-family: poppins;
+        font-weight: 300;
+      }
+      #times {
+        font-family: poppins;
+        font-weight: 300;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="heading">StopWatch</h1>
+      <div class="timing">
+        <h1 id="times">00:00:00</h1>
+      </div>
+      <div class="buttons">
+        <button onclick="Start()">Start</button>
+        <button onclick="Pause()">Pause</button>
+        <button onclick="Reset()">Reset</button>
+      </div>
+    </div>
+    <script>
+      let Hour = 0;
+      let Minute = 0;
+      let Seconds = 0;
+      timesSelected = document.getElementById("times");
+      let pauseKey = false;
+      let key;
+
+      function Start() {
+        if (key) {
+          clearInterval(key);
+        }
+        pauseKey = false;
+        key = setInterval(update, 1000);
+      }
+
+      function Pause() {
+        clearInterval(key);
+      }
+      function Reset() {
+        clearInterval(key);
+        Hour = 0;
+        Minute = 0;
+        Seconds = 0;
+        timesSelected.textContent =
+          formatetime(Hour) +
+          ":" +
+          formatetime(Minute) +
+          ":" +
+          formatetime(Seconds);
+      }
+      function update() {
+        if (!pauseKey) {
+          Seconds++;
+          if (Seconds == 60) {
+            Seconds = 0;
+            Minute++;
+            if (Minute == 60) {
+              Minute = 0;
+              Hour++;
+            }
+          }
+        }
+        timesSelected.textContent =
+          formatetime(Hour) +
+          ":" +
+          formatetime(Minute) +
+          ":" +
+          formatetime(Seconds);
+      }
+      function formatetime(time) {
+        return time < 10 ? "0" + time : time;
+      }
+    </script>
+  </body>
+</html>
